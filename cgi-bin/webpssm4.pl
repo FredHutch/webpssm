@@ -5,7 +5,6 @@ use strict;
 use Bio::Seq;
 use Bio::Tools::IUPAC;
 use lib "$ENV{'DOCUMENT_ROOT'}/lib";
-#use lib "/usr/local/apache2/htdocs/lib";
 use Path;
 use PSSM2;
 use FileHandle;

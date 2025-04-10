@@ -16,9 +16,7 @@ RUN apt-get update && apt-get install -y \
     cron \
     && rm -rf /var/lib/apt/lists/*
 
-# Enable mod_cgi to process Perl scripts
-#RUN a2enmod cgi
-#RUN cpanm CGI
+# Install Perl modules
 RUN cpanm CGI Email::Simple Email::Sender::Simple Email::Sender::Transport::SMTP
 
 RUN cpanm Bio::Perl
@@ -45,9 +43,6 @@ RUN chmod 0644 /etc/cron.d/crontab
 
 # Apply cron job
 RUN crontab /etc/cron.d/crontab
-
-# Set permissions for the CGI scripts to be executable
-#RUN chmod -R 755 /usr/local/apache2/cgi-bin
 
 # Set permissions for outputs and stat 
 RUN chmod -R 777 /usr/local/apache2/htdocs/outputs

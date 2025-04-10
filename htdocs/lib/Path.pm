@@ -18,12 +18,9 @@ Common -- package for common parameters used in WebPSSM
 
 =cut
 
-#our $documentroot = $ENV{'DOCUMENT_ROOT'};
-our $documentroot = "/usr/local/apache2/htdocs";
+our $documentroot = $ENV{'DOCUMENT_ROOT'};
 our $uploadbase = "$documentroot/outputs";
 our $statsbase = "$documentroot/stats";
-our $logbase = "$documentroot/log";
-
 
 
 1; #TRUE!!
