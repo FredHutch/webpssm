@@ -88,7 +88,7 @@ close TOGGLE;
 	
 if ($email) {
 	my $emailbody = "<p>Your job #$jobid has finished on our server. Please click 
-	<a href=http://localhost:8080/cgi-bin/processpssm.cgi?jobid=$jobid>
+	<a href=https://webpssm.fredhutch.org/cgi-bin/processpssm.cgi?jobid=$jobid>
 	here</a> to get result. The result will be kept for 5 days after this message was sent.</p>
 	<p>If you have any questions please email to mullspt\@uw.edu. Thanks.</p>";	
 
