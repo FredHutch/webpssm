@@ -1,0 +1,1 @@
+0 0 * * * perl /usr/local/apache2/cgi-bin/cleanDir.pl > /dev/null 2>&1

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>WebPSSM</title>
+	<link href="/stylesheets/pssm.css" media="screen" rel="Stylesheet" type="text/css" />
+	
+	<script type="text/javascript">
+<!--
+function isEmail (field) {
+	if (field.value.indexOf("@") == -1 || field.value.indexOf(".") == -1) {
+		alert ("Your email address is incorrect");
+		return false;
+	}else {
+		return true;
+	}
+}
+
+function checkform(form) {	
+	if (form.seqs.value.match(/^\s*$/) && form.seqFile.value.match(/^\s*$/)) {
+		alert ("Please copy and paste your sequences or upload your sequence file");
+		return false;
+	}
+	if (form.datatype.value == '') {
+		alert ("Please select a data type for your input sequences");
+		return false;
+	}
+	if (!form.email.value.match(/^\s*$/)) {
+		if (!isEmail(form.email)) {
+			return false;
+		}
+	}	
+	return true;
+}
+-->
+	</script>
+	
+
+</head>
+<body>
+
+<div id="wrap">
+
+    <div id="header">
+	    <div class="spacer">&nbsp;</div>    
+		<span class="logo">WebPSSM</span>   
+    </div>
+    
+    <div id="nav">
+<!--		<span class='nav'><a href="index.html" class="nav">Home</a></span>
+		<span class='nav'><a href="../../docs/id/about.html" class="nav">About</a></span>
+		&nbsp;-->
+	</div>
+	
+	<div class="spacer">&nbsp;</div>
+    
+    <div align="center">
+    <div align="left">
+		<P>
+		<form method=POST action="/cgi-bin/processpssm.cgi" enctype='multipart/form-data' onsubmit="return checkform(this);">
+			<input type="hidden" name="dopssm" value="1">
+			<p>Enter your Email address to receive result via Email (Optional): <input type=text name=email size=30>
+			<p>Enter FASTA-formatted sequences <strong>(nucleotide or amino acid sequences, encompassing the HIV-1 Env V3 loop)</strong>:<BR>
+			<textarea name=seqs rows=10 cols=100></textarea>
+			<BR>
+			<p>Or upload sequence fasta file <strong>(V3 loop nucleotide or amino acid sequences)</strong>: <input type=file name=seqFile>
+			<p>Choose your input sequences data type: 
+			<select id='datatype' name='datatype'>
+    				<option value='' selected>-- Please select a data type --</option>	
+    				<option value='aa'>Amino acid</option>
+    				<option value='nt'>Nucleotide</option>
+    		</select>
+			<p>Choose your <a href=#matrix>matrix</a>:<BR> subtype B:<input type=radio name=matrix value=x4r5 checked>x4r5 
+			<input type=radio name=matrix value=sinsi>sinsi<br>
+			subtype C: <input type=radio name=matrix value=subC>sinsi<br>
+			<p>
+			<input type=submit value=DoPSSM STYLE="color:#FFFFFF; background: #317B9C;
+			font-weight: bold; padding: 5px 10px; font-size: 14px;">
+			<input type="reset"STYLE="color:#FFFFFF; background: #317B9C;
+			font-weight: bold; padding: 5px 10px; font-size: 14px;">
+		</form>
+
+<P>
+<hr>
+<h2>WebPSSM Description:</font>
+</h2><P>
+WebPSSM is a bioinformatic tool for predicting HIV-1 coreceptor usage
+from amino acid or nucleotide sequences of the third variable loop (V3) of the
+envelope gene. When a nucleotide sequence is entered, it will be translated to amino acid
+sequence first. If a nucleotide sequence contains ambiguous bases, it will be translated
+to all possible amino acid sequences. The original description of the method
+can be found <a href="http://jvi.asm.org/cgi/content/full/77/24/13376?view=full&pmid=14645592">here</a>.
+<h3>Use:</h3>
+<p>You may enter as many as 10000 V3 sequences in <a href=example.fas>
+FASTA format</a>. Sequence names must be unique. All characters within sequence names other than
+alphanumeric or underscores ('_') will be changed to '_'. Scores
+and prediction data are returned in the same window after
+submission. The user can obtain results in tab-delimited format for
+use in Excel or other programs.
+<h3>Alignment feature:</h3>
+<p>The typical V3 loop in HIV-1 subtype B is 35 amino acids long, but length
+differences are frequent. The matrix in the current implementation is
+designed to score a 35 AA fragment. To obtain a correct score for
+length variants, it is important that homologous residues be in the
+correct position. Before sequences are scored, they are aligned
+against a HIV-1 subtype B consensus sequence by using Needleman-Wunsch
+algorithm and an amino acid distance matrix. Gaps and insertions
+relative to the consensus are ignored in the scoring (in general, this does not
+substantially affect the predictions; see Jensen et al. 2003). If
+multiple best alignments are calculated, all of these alignments are
+scored, and the actual scored sequences are displayed in the output.
+<br><br>
+Sequences that align poorly to the V3 consensus are flagged in the
+output. These sequences may not be actual V3 loops, or may be from a
+highly divergent subtype.
+<a name=matrix><h3>Matrices:</h3></a>
+<p>Two matrices are available for determining scores in subtype B: X4R5, calculated
+using sequences of known coreceptor phenotype, as assayed on indicator
+cells expressing exogenous CD4 and either CCR5 or CXCR4; and SINSI,
+calculated using sequences of known synctyium-inducing phenotype on
+the MT2 cell line. We have found that these matrices can give
+different phenotype predictions depending on sequence (see Jensen et
+al., 2003), and that correlations with disease progression (unpublished)
+and prognosis on HAART (Brumme et al., 2004) are better 
+using SINSI scores. For subtype C only a SINSI matrix is available. 
+<h3>Citations:</h3>
+<ul>
+<li>Jensen, M. A., F.-S. Li, A. B. van 't Wout, D. C. Nickle, D. Shriner, 
+        H.-X. He, S. McLaughlin, R. Shankarappa, J. B. Margolick, and J. I. Mullins. 2003. Improved 
+        coreceptor usage prediction and genotypic monitoring of R5-to-X4 transition by motif analysis 
+        of HIV-1 <i>env</i> V3 loop sequences. 
+     <a href="http://jvi.asm.org/cgi/reprint/77/24/13376">
+     <i>Journal of Virology</i> <b>77:</b> 13376-13388</a>.
+<li>Brumme, Z. L., W. W. Dong, B. Yip, B. Wynhoven, N. G. Hoffman, 
+R. Swanstrom, M. A. Jensen, J. I. Mullins, R. S. Hogg, J. S. Montaner, 
+and P. R. Harrigan. 2004. Clinical and immunological impact of HIV 
+envelope V3 sequence variation after starting initial triple 
+antiretroviral therapy. 
+<a href="http://content.wkhealth.com/linkback/openurl?issn=0269-9370&amp;volume=18&amp;issue=4&amp;spage=F1"><i>AIDS</i> 
+<b>18:</b> F1-F9</a>.
+</li>
+</li>
+        <li>Jensen, M. A., M. Coetzer, A. B. van 't Wout, L. Morris, and J. I. Mullins. 2006. 
+        A reliable phenotype predictor for human immunodeficiency virus type 1 
+        subtype C based on Envelope V3 sequences.
+        <a href="http://jvi.asm.org/cgi/reprint/80/10/4698"><i>Journal of Virology</i> 
+        <b>80:</b> 4698-4704</a>.
+</li>
+
+
+</ul>
+<h3>Caveats:</h3>
+<p>The current implementation uses matrices derived using either subtype B
+or C sequences only, and have been tested only on phenotyped subtype B or
+C sequences, respectively. Predictions for other subtypes should be treated with
+skepticism. 
+<h3>Contact:</h3>
+<p>For any questions, bugs and suggestions, please send email to <a href="mailto:mullspt@uw.edu?subject=WebPSSM">mullspt@uw.edu</a> 
+		and include a few sentences describing, briefly, the nature of your questions and include contact information.</p>
+<br>
+
+
+<div id='footer'>
+	<p class='copyright'>&copy; 2025 Fred Hutch Cancer Center. All rights reserved.</p>
+</div>
+</div>
+</body>
+</html>
