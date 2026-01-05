@@ -90,7 +90,7 @@ if ($email) {
 	my $emailbody = "<p>Your job #$jobid has finished on our server. Please click 
 	<a href=https://webpssm.fredhutch.org/cgi-bin/processpssm.cgi?jobid=$jobid>
 	here</a> to get result. The result will be kept for 5 days after this message was sent.</p>
-	<p>If you have any questions please email to mullspt\@uw.edu. Thanks.</p>";	
+	<p>If you have any questions please email to cohnlabsupport@fredhutch.org. Thanks.</p>";	
 
 	# Create the email
 	my $cemail = Email::Simple->create(
@@ -104,7 +104,7 @@ if ($email) {
 		body => $emailbody,
 	);
 	$cemail->header_set( 'Content-Type' => 'Text/html' );
-	$cemail->header_set( 'Reply-To' => 'mullspt@uw.edu' );
+	$cemail->header_set( 'Reply-To' => 'cohnlabsupport@fredhutch.org' );
 	
 	# Configure the SMTP transport
 	my $transport = Email::Sender::Transport::SMTP->new({
@@ -400,7 +400,6 @@ sub print_stats {
 	}
 	close IN;
 	open STATS, ">>$statsfile" or die "couldn't open $statsfile: $!\n";
-	print STATS "$jobid\n";
 	print STATS $jobid,"\t",$seqCount,"\t",$date,"\t",$addr,"\t",$email,"\n";
 	close STATS;
 }
